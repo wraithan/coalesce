@@ -1,0 +1,23 @@
+{
+  "name": "coalesce",
+  "version": "0.0.1",
+  "description": "Code that powers coalesce.io",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.2.5",
+    "express-persona": "0.0.7",
+    "pg": "~1.1.2",
+    "jade": "~0.31.1",
+    "connect-redis": "~1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wraithan/coalesce.git"
+  },
+  "author": "Wraithan (http://wraithan.net)",
+  "license": "MIT"
+}

@@ -1,0 +1,17 @@
+!!!5
+html
+  head
+    title coalesce
+    link(rel='stylesheet', href='css/base.css')
+    script(src="https://login.persona.org/include.js")
+    script(src="/js/jquery.min.js")
+    script(src="/js/persona.js")
+  body
+    - if (user) {
+      button#login.hidden Login
+      button#logout Logout
+    - } else {
+      button#login Login
+      button#logout.hidden Logout
+    - }
+
