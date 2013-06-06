@@ -1,17 +1,54 @@
 !!!5
 html
   head
-    title coalesce
+    title Coalesce
+    link(rel='stylesheet', href='css/bootstrap.min.css')
     link(rel='stylesheet', href='css/base.css')
+  body
+    .navbar-wrapper
+      .container
+        .navbar
+          .navbar-inner
+            a(href='#').brand Coalesce
+            ul.nav
+              li
+                a(href='#') About
+            ul.nav.pull-right
+              - if (user) {
+                li#user-dropdown.dropdown
+                  a(href='#', data-toggle="dropdown").dropdown-toggle=user
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='#')#logout Logout
+                li#user-login.hidden
+                  a(href='#')#login Login
+              - } else {
+                li#user-dropdown.dropdown.hidden
+                  a(href='#', data-toggle="dropdown").dropdown-toggle
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='#')#logout Logout
+                li#user-login
+                  a(href='#')#login Login
+              - }
+    .container
+      .row
+        .span12
+          p=id
+      footer
+        hr
+        p
+          | Site by 
+          a(href='http://wraithan.net/') Wraithan
+          | . Source is available on 
+          a(href='http://github.com/wraithan/coalesce') github
+          | . Report issues 
+          a(href='http://github.com/wraithan/coalesce/issues') here
+          | .
+
     script(src="https://login.persona.org/include.js")
     script(src="/js/jquery.min.js")
+    script(src="/js/bootstrap.min.js")
     script(src="/js/persona.js")
-  body
-    - if (user) {
-      button#login.hidden Login
-      button#logout Logout
-    - } else {
-      button#login Login
-      button#logout.hidden Logout
-    - }
-

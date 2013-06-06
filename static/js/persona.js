@@ -1,4 +1,3 @@
-/*global $:false */
 window.onload = function() {
   var login = $("#login")
   login.click(function() {
@@ -21,8 +20,11 @@ window.onload = function() {
         var data = JSON.parse(this.responseText)
         if (data && data.status === "okay") {
           console.log("You have been logged in as: " + data.email)
-          logout.show()
-          login.hide()
+          $('#user-dropdown').show()
+          var link = $('#user-dropdown > a')
+          link.text(data.email)
+          link.append($('<b>').addClass('caret'))
+          $('#user-login').hide()
         }
       }, false)
 
@@ -34,9 +36,9 @@ window.onload = function() {
       var xhr = new XMLHttpRequest()
       xhr.open("POST", "/persona/logout", true)
       xhr.addEventListener("loadend", function(e) {
-        logout.hide()
-        login.show()
         console.log("You have been logged out")
+        $('#user-dropdown').hide()
+        $('#user-login').show()
       })
       xhr.send()
     }

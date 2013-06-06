@@ -22,7 +22,7 @@ app.use(express.session({
   , port: 6379
   , db: 0
   })
-, secret: '1234567890QWERTY'
+, secret: process.env.SECRET || '1234567890QWERTY'
 }))
 app.use(app.router)
 app.use(express.static(path.join(__dirname, 'static')))
@@ -30,8 +30,19 @@ app.engine('jade', require('jade').__express)
 app.set('views', path.join(__dirname, 'templates'))
 
 app.get('/', function (req, res) {
-  console.log(req.session.email)
-  res.render('index.jade', {user: req.session.email})
+  var email
+  if (req.session !== undefined) {
+    email = req.session.email
+  }
+  storage.pg(function(err, client, done) {
+    client.query('SELECT id FROM users WHERE email=$1',
+                 [email], function(err, data) {
+      res.render('index.jade', {
+        user: email,
+        id: data.rows[0].id
+      })
+    })
+  })
 })
 
 function verifyResponse(error, req, res, email) {
@@ -41,7 +52,7 @@ function verifyResponse(error, req, res, email) {
     , reason: error
     })
   } else {
-    storage.getOrCreateUser(email)
+    storage.createUser(email)
     res.json({
       status: 'okay'
     , email: email
