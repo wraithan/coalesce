@@ -1,0 +1,10 @@
+extends base
+
+block content
+  if topics
+    dl
+      each topic in topics
+        dt=topic.name
+          dd=topic.description
+  else
+    p No topics

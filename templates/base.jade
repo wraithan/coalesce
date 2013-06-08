@@ -11,12 +11,18 @@ html
           .navbar-inner
             a(href='/').brand Coalesce
             ul.nav
-              li.about
+              li
                 a(href='#') About
-              li.create
-                a(href='/topic/create') Create
+              li.dropdown
+                a(href='#', data-toggle='dropdown').dropdown-toggle Topics
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='/topic/list') List
+                  li
+                    a(href='/topic/create') Create
             ul.nav.pull-right
-              - if (user) {
+              if user
                 li#user-dropdown.dropdown
                   a(href='#', data-toggle="dropdown").dropdown-toggle=user
                     b.caret
@@ -25,7 +31,8 @@ html
                       a(href='#')#logout Logout
                 li#user-login.hidden
                   a(href='#')#login Login
-              - } else {
+
+              else
                 li#user-dropdown.dropdown.hidden
                   a(href='#', data-toggle="dropdown").dropdown-toggle
                     b.caret
@@ -34,7 +41,7 @@ html
                       a(href='#')#logout Logout
                 li#user-login
                   a(href='#')#login Login
-              - }
+
     .container
       .row
         .span12

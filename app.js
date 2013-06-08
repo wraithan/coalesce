@@ -46,7 +46,13 @@ app.get('/topic/create', function(req, res) {
 app.post('/topic/create', function(req, res) {
   console.log(req.body)
   storage.createTopic(req.body.name, req.body.description, req.session.email)
-  res.render('create.jade', {form: req.post})
+  res.redirect('/topic/list')
+})
+
+app.get('/topic/list', function(req, res) {
+  storage.getTopics(req.session.email, function(topics) {
+    res.render('list.jade', {topics: topics})
+  })
 })
 
 function verifyResponse(error, req, res, email) {
