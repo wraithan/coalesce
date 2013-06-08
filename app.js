@@ -34,15 +34,19 @@ app.get('/', function (req, res) {
   if (req.session !== undefined) {
     email = req.session.email
   }
-  storage.pg(function(err, client, done) {
-    client.query('SELECT id FROM users WHERE email=$1',
-                 [email], function(err, data) {
-      res.render('index.jade', {
-        user: email,
-        id: data.rows[0].id
-      })
-    })
+  res.render('index.jade', {
+    user: email
   })
+})
+
+app.get('/topic/create', function(req, res) {
+  res.render('create.jade')
+})
+
+app.post('/topic/create', function(req, res) {
+  console.log(req.body)
+  storage.createTopic(req.body.name, req.body.description, req.session.email)
+  res.render('create.jade', {form: req.post})
 })
 
 function verifyResponse(error, req, res, email) {

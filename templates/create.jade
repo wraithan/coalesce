@@ -1,0 +1,15 @@
+extends base
+
+block content
+  form(method='POST', action="").form-horizontal
+    .control-group
+      label(for='name').control-label Name:
+      .controls
+        input(type='text', name='name', required)#id
+    .control-group
+      label(for='description').control-label Description:
+      .controls
+        textarea(rows=10, cols=50, name='description', required)
+    .control-group
+      .controls
+        input(type='submit', value='Submit')
