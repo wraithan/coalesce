@@ -5,6 +5,7 @@ var express = require('express')
   , libStorage = require('./lib/storage')
   , utils = require('./lib/utils')
   , RedisStore = require('connect-redis')(express)
+  , uslug = require('uslug')
 
 var app = express()
 var storage = new libStorage({

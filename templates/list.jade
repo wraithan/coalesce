@@ -4,7 +4,8 @@ block content
   if topics
     dl
       each topic in topics
-        dt=topic.name
+        dt
+          a(href=topic.url)=topic.name
           dd=topic.description
   else
     p No topics
