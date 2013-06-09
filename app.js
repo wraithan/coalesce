@@ -3,6 +3,7 @@ var express = require('express')
   , path = require('path')
   , persona = require('express-persona')
   , libStorage = require('./lib/storage')
+  , utils = require('./lib/utils')
   , RedisStore = require('connect-redis')(express)
 
 var app = express()
@@ -30,17 +31,15 @@ app.engine('jade', require('jade').__express)
 app.set('views', path.join(__dirname, 'templates'))
 
 app.get('/', function (req, res) {
-  var email
-  if (req.session !== undefined) {
-    email = req.session.email
-  }
   res.render('index.jade', {
-    user: email
+    user: utils.emailFromRequest(req)
   })
 })
 
 app.get('/topic/create', function(req, res) {
-  res.render('create.jade')
+  res.render('create.jade', {
+    user: utils.emailFromRequest(req)
+  })
 })
 
 app.post('/topic/create', function(req, res) {
@@ -50,8 +49,14 @@ app.post('/topic/create', function(req, res) {
 })
 
 app.get('/topic/list', function(req, res) {
-  storage.getTopics(req.session.email, function(topics) {
-    res.render('list.jade', {topics: topics})
+  storage.getTopicsByUser(req.session.email, function(topics) {
+    topics.forEach(function(topic, index) {
+      topic.url = '/topic/' + topic.id + '/' + uslug(topic.name)
+    })
+    res.render('list.jade', {
+      topics: topics
+    , user: utils.emailFromRequest(req)
+    })
   })
 })
 
