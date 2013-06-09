@@ -61,6 +61,16 @@ app.get('/topic/list', function(req, res) {
   })
 })
 
+app.get('/topic/:id/:slug', function(req, res) {
+  storage.getTopicById(req.session.email, req.params.id,
+                       function(topic) {
+    res.render('details.jade', {
+      topic: topic
+    , user: utils.emailFromRequest(req)
+    })
+  })
+})
+
 function verifyResponse(error, req, res, email) {
   if (error) {
     res.json({
